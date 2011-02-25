@@ -62,6 +62,7 @@ void OrdenarAlfabeticamente(int numContactos, tipoContacto contactosAux[])
 	{
 		for ( j = i+1 ; j < numContactos ; j++ )
 		{
+			// Comparo los nombres
 			if ( contactosAux[i].nombre > contactosAux[j].nombre )
 			{
 				fichaTemporal = contactosAux[i];
@@ -71,6 +72,7 @@ void OrdenarAlfabeticamente(int numContactos, tipoContacto contactosAux[])
 		}
 	}
 
+	// Muestro los contactos ya ordenados
 	for ( i = 0 ; i < numContactos ; i++ )
 	{
 		cout << "Id: " << contactosAux[i].id << endl;
@@ -83,19 +85,45 @@ void OrdenarAlfabeticamente(int numContactos, tipoContacto contactosAux[])
 		cout << "Edad: " << contactosAux[i].edad << endl;
 		cout << "--------------------" << endl;
 		cout << endl;
+		
+		// Mostrar de 10 en 10
+		if (cont == 10)
+		{
+			// Si no quedan contactos
+			if (i == maxContactos - 1)
+			{
+				cout << "Pulse una tecla para volver al menú..." << endl;
+				cin >> var;
+				cont = 0;
+				system("cls");
+			}
+			// Al llegar a los diez
+			else 
+			{
+				cout << "Pulse una tecla para continuar..." << endl;
+				cin >> var;
+				cont = 0;
+				system("cls");
+			}
+		}
+
+	cont++;
 	}
 }
+
 
 // Ordenar por edad
 void OrdenarEdad(int numContactos, tipoContacto contactosAux[])
 {
 	int i, j;
+	int cont = 1;
 	tipoContacto fichaTemporal;
 	
 	for ( i = 0 ; i < numContactos-1 ; i++ )
 	{
 		for ( j = i+1 ; j < numContactos ; j++ )
 		{
+			// Comparo las edades
 			if ( contactosAux[i].edad > contactosAux[j].edad )
 			{
 				fichaTemporal = contactosAux[i];
@@ -104,7 +132,8 @@ void OrdenarEdad(int numContactos, tipoContacto contactosAux[])
 			}
 		}
 	}
-
+	
+	// Muestro los contactos ya ordenados
 	for ( i = 0 ; i < numContactos ; i++ )
 	{
 		cout << "Id: " << contactosAux[i].id << endl;
@@ -117,6 +146,29 @@ void OrdenarEdad(int numContactos, tipoContacto contactosAux[])
 		cout << "Edad: " << contactosAux[i].edad << endl;
 		cout << "--------------------" << endl;
 		cout << endl;
+		
+		// Mostrar de 10 en 10
+		if (cont == 10)
+		{
+			// Si no quedan contactos
+			if (i == maxContactos - 1)
+			{
+				cout << "Pulse una tecla para volver al menú..." << endl;
+				cin >> var;
+				cont = 0;
+				system("cls");
+			}
+			// Al llegar a los diez
+			else 
+			{
+				cout << "Pulse una tecla para continuar..." << endl;
+				cin >> var;
+				cont = 0;
+				system("cls");
+			}
+		}
+
+	cont++;
 	}
 }
 
@@ -169,6 +221,7 @@ int main()
                 system("cls");
 				cout << "1. Ver todos" << endl;
 				cout << "2. Ordenar" << endl;
+				cout << "3. Salir al menú." << endl;
 				cout << "Introduzca una opción: ";
 				cin >> opcion;
 				cout << "--------------------" << endl;
@@ -177,12 +230,15 @@ int main()
 				switch (opcion)
 				{
 					case 1:
+						// Muestro los contatos sin cambiar el orden
 						VerContactosOpcion03(numContactos, contactos);
+						cout << endl;
 						break;
 					
 					case 2:
 						cout << "1. Ordenar alfabeticamente." << endl;
 						cout << "2. Ordenar por edad." << endl;
+						cout << "3. Salir al menú." << endl;
 						cout << "Introduzca una opción: ";
 						cin >> opcion;
 						cout << "--------------------" << endl;
@@ -192,13 +248,20 @@ int main()
 						{
 							case 1:
 								OrdenarAlfabeticamente(numContactos, contactos);
+								cout << endl;
 								break;
 							case 2:
 								OrdenarEdad(numContactos, contactos);
+								cout << endl;
+								break;
+							default:
 								break;
 						}
 						
 						break;
+						
+						default:
+							break;
 				}
 				break;
 
