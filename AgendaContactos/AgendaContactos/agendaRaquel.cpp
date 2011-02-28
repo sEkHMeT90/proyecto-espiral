@@ -26,6 +26,7 @@ struct tipoContacto
 void InsertarContacto(int numContactos, tipoContacto contactos[])
 {
   string auxText;
+  bool esCorrecto = false;
 
   //Asignamos la id
   contactos[numContactos].id = numContactos + 1;
@@ -56,80 +57,114 @@ void InsertarContacto(int numContactos, tipoContacto contactos[])
   cin >> contactos[numContactos].email;
 
   // Pedimos el día de cumpleaños y comprobamos el formato y la fecha
-  do
+  try 
   {
-    if (auxText[2] != '-')
-      cout << "Formato incorrecto. Por favor introduzca DD-MM" << endl;
 
-    cout << "Introduzca el día de su cumpleaños (DD-MM): ";
-    cin >> auxText;
-
+    do
+    {
+      cout << "Introduzca el día de su cumpleaños (DD-MM): ";
+      cin >> auxText;
     
-    //contactos[numContactos].cumpleanyos
+      int mes = atoi(auxText.substr(3).c_str());
+      int dia = atoi(auxText.substr(0,2).c_str());
 
+      switch ( mes )
+      {
+        case 1: //Enero
+          if ((dia > 00) && (dia < 31))
+          {
+            esCorrecto = true;
+          }
+        break;
+        case 2: //Febrero
+          if ((dia > 00) && (dia < 29))
+          {
+            esCorrecto = true;
+          }
+        break;
+        case 3: //Marzo 
+          if ((dia > 00) && (dia < 31))
+          {
+            esCorrecto = true;
+          }
+        break;
+        case 4: //Abril
+          if ((dia > 00) && (dia < 30))
+          {
+            esCorrecto = true;
+          }
+        break;
+        case 5: //Mayo
+          if ((dia > 00) && (dia < 31))
+          {
+            esCorrecto = true;
+          }
+        break;
+        case 6: //Junio 
+          if ((dia > 00) && (dia < 30))
+          {
+            esCorrecto = true;
+          }
+        break;
+        case 7: //Julio 
+          if ((dia > 00) && (dia < 31))
+          {
+            esCorrecto = true;
+          }
+        break;
+        case 8: //Agosto
+          if ((dia > 00) && (dia < 31))
+          {
+            esCorrecto = true;
+          }
+        break;
+        case 9: //Septiembre
+          if ((dia > 00) && (dia < 30))
+          {
+            esCorrecto = true;
+          }
+        break;
+        case 10: //Octubre
+          if ((dia > 00) && (dia < 31))
+          {
+            esCorrecto = true;
+          }
+        break;
+        case 11: //Noviembre
+          if ((dia > 00) && (dia < 30))
+          {
+            esCorrecto = true;
+          }
+        break;
+        case 12: //Diciembre
+          if ((dia > 00) && (dia < 31))
+          {
+            esCorrecto = true;
+          }
+        break;
+      }
+
+      if((auxText.length() != 5) || (auxText[2] != '-') || (auxText.substr(3) < "01") || (auxText.substr(3) > "12") || (esCorrecto != true))
+        cout << "Formato incorrecto" << endl;
+
+    }
+    while ((auxText.length() != 5) || (auxText[2] != '-') || (auxText.substr(3) < "01") || (auxText.substr(3) > "12") || (esCorrecto != true));
+  
+    contactos[numContactos].cumpleanyos == auxText;
   }
-  while( auxText[2] != '-');
 
+  catch( exception )
+  {
+    cout << "Los valores introducidos no son correctos";
+  }
   // Pedimos el edad
   cout << "Introduzca su edad: ";
   cin >> contactos[numContactos].edad;
 }
 
 // Función para modificar un contacto
-void ModificarContacto(int numContactos, tipoContacto contactos[])
+void ModificarContacto()
 {
-  int contactoModificar = 0;//Variale para seleccionar que contacto modificar
-  string nombreAuxiliar;
-  int edadAuxiliar;
-  
-  do
-  {
-     cout << "Introduce el contacto a modificar " <<endl;
-     cin >> contactoModificar;
-     cin.ignore();
-  }while( contactoModificar <= 0 || contactoModificar > numContactos);
-  contactoModificar-=1;
-
-  cout << "Este es el antiguo nombre: " << contactos[contactoModificar].nombre <<endl;
-  cout << "Dime el nuevo nombre (Pulsa intro si on quieres introducir nada)" <<endl;
-  getline(cin,nombreAuxiliar);
-  if ( nombreAuxiliar != "");
-    contactos[contactoModificar].nombre = nombreAuxiliar;
-  
-  cout << "Este es el antiguo apellido: " << contactos[contactoModificar].apellido <<endl;
-  cout << "Dime el nuevo apellido (Pulsa intro si on quieres introducir nada)" <<endl;
-  getline(cin,nombreAuxiliar);
-  if ( nombreAuxiliar != "")
-    contactos[contactoModificar].apellido = nombreAuxiliar;
-
-  cout << "Este es el antiguo telefono: " << contactos[contactoModificar].telefono <<endl;
-  cout << "Dime el nuevo telefono (Pulsa intro si on quieres introducir nada)" <<endl;
-  getline(cin,nombreAuxiliar);
-  if ( nombreAuxiliar != "")
-    contactos[contactoModificar].telefono = nombreAuxiliar;
-
-  cout << "Este es el antiguo email: " << contactos[contactoModificar].email <<endl;
-  cout << "Dime el nuevo email (Pulsa intro si on quieres introducir nada)" <<endl;
-  getline(cin,nombreAuxiliar);
-  if ( nombreAuxiliar != "")
-    contactos[contactoModificar].email = nombreAuxiliar;
-
-  cout << "Este es el antiguo cumpleaños: " << contactos[contactoModificar].cumpleanyos <<endl;
-  cout << "Dime el nuevo cumpleaños (Pulsa intro si on quieres introducir nada)" <<endl;
-  getline(cin,nombreAuxiliar);
-  if ( nombreAuxiliar != "")
-    contactos[contactoModificar].cumpleanyos = nombreAuxiliar;
-  
-  /*cout << "Este es el antiguo edad: " << contactos[contactoModificar].cumpleanyos <<endl;
-  cout << "Dime el nuevo edad (Pulsa intro si on quieres introducir nada)" <<endl;
-  getline(cin,nombreAuxiliar);
-  if ( edadAuxiliar != "")
-  {
-    edadAuxiliar = atoi(nombreAuxiliar.c_str());
-    contactos[contactoModificar].edad = nombreAuxiliar;
-  }
-  */
-  cout << "Los datos han quedado así:" << contactos[contactoModificar].id << "-" << contactos[contactoModificar].nombre << "-" << contactos[contactoModificar].apellido << "-" << contactos[contactoModificar].telefono << "-" << contactos[contactoModificar].email << "-" << contactos[contactoModificar].cumpleanyos << "-" << contactos[contactoModificar].cumpleanyos << "-" << contactos[contactoModificar].edad << endl;
 }
 
 
@@ -141,14 +176,6 @@ void VerContactos()
 // Función para calcular los días faltantes hasta el cumpleaños de un contacto
 void CalcularCumpleanyos()
 {
-}
-
-void MostrarContactosOpcion2(int numContactos,tipoContacto contactos[])
-{
-  for (int i=0 ; i < numContactos ; i++)
-  {
-    cout << contactos[i].id + 1<< "-" << contactos[i].nombre <<endl;
-  }
 }
 
 int main()
@@ -190,13 +217,6 @@ int main()
 
             // Modificar un contacto
             case 2:
-              if ( numContactos <= 0)
-                cout << "No hay datos para modificar "<<endl;
-              else
-              {
-                //MostrarContactosOpcion2(numContactos, contactos);
-                ModificarContacto(numContactos,contactos);
-              }
             break;
 
             // Ver lista de contactos
