@@ -56,12 +56,116 @@ void CalcularCumpleanyos( int dia, int mes )
     diaBuscar = atoi(contactos[id-1].cumpleanyos.substr(0,2).c_str());
     mesBuscar = atoi(contactos[id-1].cumpleanyos.substr(3).c_str());
 
-    diasFaltantes = dia - diaBuscar;
-    mesesFaltantes = mes - mesesFaltantes;
+	// Calculo del mes
+	if ( mes == mesBuscar )
+		mesesFaltantes = 0;
 
-    // ### FALTA ABACAR LAS COMPARACIONES ###
-    /*if ( diasFaltantes < 
-    cout <<*/
+	else
+	{
+		if ( mes < mesBuscar )
+			mesesFaltantes = mesBuscar - mes;
+
+		else
+			mesesFaltantes = (12 - mes) + mesBuscar;
+	}
+
+	// Calculo del día
+	if ( dia == diaBuscar )
+		diasFaltantes = 0;
+
+	else
+	{
+		if ( dia < diaBuscar )
+			diasFaltantes = diaBuscar - dia;
+
+		else
+		{
+			switch ( mes )
+			{
+				// Enero
+                case 1:
+					goto case 12;
+                break;
+
+                // Febrero
+                case 2:
+                    diasFaltantes = (28 - dia) + diaBuscar;
+                break;
+
+                // Marzo
+                case 3:
+                    goto case 12;
+                break;
+
+                // Abril
+                case 4:
+                    goto case 11;
+                break;
+
+                // Mayo
+                case 5:
+                    goto case 12;
+                break;
+
+                // Junio
+                case 6:
+                    goto case 11;
+                break;
+
+                // Julio
+                case 7:
+                    goto case 12;
+                break;
+
+                // Agosto
+                case 8:
+                    goto case 12;
+                break;
+
+                // Septiembre
+                case 9:
+                    goto case 11;
+                break;
+
+                // Octubre
+                case 10:
+                    goto case 12;
+                break;
+
+                // Noviembre
+                case 11:
+                    diasFaltantes = (30 - dia) + diaBuscar;
+                break;
+
+                // Diciembre
+                case 12:
+                    diasFaltantes = (31 - dia) + diaBuscar;
+                break;
+			}
+		}
+	}
+
+	// Muestro los días y los meses que faltan
+	if ( (diasFaltantes == 0) && (mesesFaltantes == 0) )
+		cout << "El cumpleaños es hoy" << endl;
+
+	else
+	{
+		if ( (diasFaltantes > 0) && (mesesFaltantes == 0) )
+			cout << "Faltan " << diasFaltantes << " días" << endl;
+
+		else
+		{
+			if ( (diasFaltantes == 0) && (mesesFaltantes > 0) )
+				cout << "Faltan " << mesesFaltantes << " meses" << endl;
+
+			else
+			{
+				cout << "Faltan " << diasFaltantes << " días";
+				cout << " y " << mesesFaltantes << " meses" << endl;
+			}
+		}
+	}
 }
 
 int main()
@@ -158,11 +262,7 @@ int main()
                                         {
                                             // Enero
                                             case 1:
-                                                if ( (dia >= 1) && (dia <= 31 ) )
-                                                    ok = true;
-
-                                                else
-                                                    cout << "El dia tiene que estar entre 01 y 31" << endl;
+												goto case 12;
                                             break;
 
                                             // Febrero
@@ -176,74 +276,42 @@ int main()
 
                                             // Marzo
                                             case 3:
-                                                if ( (dia >= 1) && (dia <= 31 ) )
-                                                    ok = true;
-
-                                                else
-                                                    cout << "El dia tiene que estar entre 01 y 31" << endl;
+                                                goto case 12;
                                             break;
 
                                             // Abril
                                             case 4:
-                                                if ( (dia >= 1) && (dia <= 30 ) )
-                                                    ok = true;
-
-                                                else
-                                                    cout << "El dia tiene que estar entre 01 y 30" << endl;
+                                                goto case 11;
                                             break;
 
                                             // Mayo
                                             case 5:
-                                                if ( (dia >= 1) && (dia <= 31 ) )
-                                                    ok = true;
-
-                                                else
-                                                    cout << "El dia tiene que estar entre 01 y 31" << endl;
+                                                goto case 12;
                                             break;
 
                                             // Junio
                                             case 6:
-                                                if ( (dia >= 1) && (dia <= 30 ) )
-                                                    ok = true;
-
-                                                else
-                                                    cout << "El dia tiene que estar entre 01 y 30" << endl;
+                                                goto case 11;
                                             break;
 
                                             // Julio
                                             case 7:
-                                                if ( (dia >= 1) && (dia <= 31 ) )
-                                                    ok = true;
-
-                                                else
-                                                    cout << "El dia tiene que estar entre 01 y 31" << endl;
+                                                goto case 12;
                                             break;
 
                                             // Agosto
                                             case 8:
-                                                if ( (dia >= 1) && (dia <= 31 ) )
-                                                    ok = true;
-
-                                                else
-                                                    cout << "El dia tiene que estar entre 01 y 31" << endl;
+                                                goto case 12;
                                             break;
 
                                             // Septiembre
                                             case 9:
-                                                if ( (dia >= 1) && (dia <= 30 ) )
-                                                    ok = true;
-
-                                                else
-                                                    cout << "El dia tiene que estar entre 01 y 30" << endl;
+                                                goto case 11;
                                             break;
 
                                             // Octubre
                                             case 10:
-                                                if ( (dia >= 1) && (dia <= 31 ) )
-                                                    ok = true;
-
-                                                else
-                                                    cout << "El dia tiene que estar entre 01 y 31" << endl;
+                                                goto case 12;
                                             break;
 
                                             // Noviembre
