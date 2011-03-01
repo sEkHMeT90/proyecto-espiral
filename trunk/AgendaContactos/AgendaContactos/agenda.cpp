@@ -479,8 +479,6 @@ void CalcularCumpleanyos( int dia, int mes, int numContactos, tipoContacto conta
 
 		else
 		{
-            mesesFaltantes --;
-
 			switch ( mes )
 			{
 				// Enero
@@ -543,6 +541,8 @@ void CalcularCumpleanyos( int dia, int mes, int numContactos, tipoContacto conta
                     diasFaltantes = (31 - dia) + diaBuscar;
                 break;
 			}
+
+            mesesFaltantes --;
 		}
 	}
 
