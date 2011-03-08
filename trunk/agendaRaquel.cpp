@@ -19,138 +19,240 @@ struct tipoContacto
   string telefono;
   string email;
   string cumpleanyos;
-  int edad;
+  string edad;
 };
 
 // Función para agregar un contacto
 void InsertarContacto(int numContactos, tipoContacto contactos[])
 {
   string auxText;
-  bool esCorrecto = false;
+  int dia;
+  int mes;
+  bool ok = false;
+  bool emailValidado = false;
 
   //Asignamos la id
   contactos[numContactos].id = numContactos + 1;
+  cin.ignore();
 
   // Pedimos el nombre
   cout << "Introduzca su nombre: ";
-  cin >> contactos[numContactos].nombre;
+  getline(cin,contactos[numContactos].nombre);
 
   // Pedimos el apellido
   cout << "Introduzca su apellido: ";
-  cin >> contactos[numContactos].apellido;
-
+  getline(cin,contactos[numContactos].apellido);
   // Pedimos el teléfono mientras tenga más de 15 dígitos
-  do
+  
+
+  cout << "Introduzca su teléfono: ";
+  getline(cin,auxText);
+
+  while((auxText.length() > 15) || (auxText == ""))
   {
      if (auxText.length() > 15)
       cout << "Número excesivamente largo." << endl;
+	 if (auxText == "")
+	  cout << "No puede dejar el campo vacio" << endl;
 
     cout << "Introduzca su teléfono: ";
-    cin >> auxText;
+    getline(cin,auxText);
   }
-  while(auxText.length() > 15);
 
   contactos[numContactos].telefono = auxText;
 
   // Pedimos el e-mail
-  cout << "Introduzca su e-mail: ";
-  cin >> contactos[numContactos].email;
+  do {
+      cout << "Introduzca su e-mail: ";
+      getline(cin,auxText);
+
+      while(auxText == ""){
+
+	      cout << "No puede dejar el campo vacio" << endl;
+          cout << "Introduzca su e-mail: ";
+          getline(cin,auxText);
+      }
+
+      // Comprobamos que el e-mail sea válido
+      if ((auxText.find_first_of('@') == auxText.find_last_of('@')) // Si solo contiene un @
+         && (auxText.find_last_of('.') > auxText.find_first_of('@')) // Si el último punto está detras del @
+         && (auxText.find_last_of('.') < auxText.length())) // Si el último punto no es el último carácter
+            emailValidado = true; // Suponemos que el e-mail es correcto
+      else
+          cout << "El e-mail introducido no tiene un formato válido" << endl;
+  }
+  while( !emailValidado );
+
+  contactos[numContactos].email = auxText;
 
   // Pedimos el día de cumpleaños y comprobamos el formato y la fecha
   try 
   {
+        do
+        {
+            cout << "Introduzca el día de su cumpleaños (DD-MM): ";
+            getline(cin,auxText);
 
-    do
-    {
-      cout << "Introduzca el día de su cumpleaños (DD-MM): ";
-      cin >> auxText;
-    
-      int mes = atoi(auxText.substr(3).c_str());
-      int dia = atoi(auxText.substr(0,2).c_str());
+            if ( auxText == "" )
+                cout << "La fecha no puede estar vacía" << endl;
 
-      switch ( mes )
-      {
-        case 1: //Enero
-          if ((dia > 00) && (dia < 31))
-          {
-            esCorrecto = true;
-          }
-        break;
-        case 2: //Febrero
-          if ((dia > 00) && (dia < 29))
-          {
-            esCorrecto = true;
-          }
-        break;
-        case 3: //Marzo 
-          if ((dia > 00) && (dia < 31))
-          {
-            esCorrecto = true;
-          }
-        break;
-        case 4: //Abril
-          if ((dia > 00) && (dia < 30))
-          {
-            esCorrecto = true;
-          }
-        break;
-        case 5: //Mayo
-          if ((dia > 00) && (dia < 31))
-          {
-            esCorrecto = true;
-          }
-        break;
-        case 6: //Junio 
-          if ((dia > 00) && (dia < 30))
-          {
-            esCorrecto = true;
-          }
-        break;
-        case 7: //Julio 
-          if ((dia > 00) && (dia < 31))
-          {
-            esCorrecto = true;
-          }
-        break;
-        case 8: //Agosto
-          if ((dia > 00) && (dia < 31))
-          {
-            esCorrecto = true;
-          }
-        break;
-        case 9: //Septiembre
-          if ((dia > 00) && (dia < 30))
-          {
-            esCorrecto = true;
-          }
-        break;
-        case 10: //Octubre
-          if ((dia > 00) && (dia < 31))
-          {
-            esCorrecto = true;
-          }
-        break;
-        case 11: //Noviembre
-          if ((dia > 00) && (dia < 30))
-          {
-            esCorrecto = true;
-          }
-        break;
-        case 12: //Diciembre
-          if ((dia > 00) && (dia < 31))
-          {
-            esCorrecto = true;
-          }
-        break;
-      }
+            else
+            {
+                if ( auxText.length() != 5 )
+                    cout << "El formato de fecha no es correcto: DD-MM" << endl;
 
-      if((auxText.length() != 5) || (auxText[2] != '-') || (auxText.substr(3) < "01") || (auxText.substr(3) > "12") || (esCorrecto != true))
-        cout << "Formato incorrecto" << endl;
+                else
+                {
+                    if ( auxText[2] != '-' )
+                    {
+                        cout << "El formato de fecha no es correcto: DD-MM" << endl;
+                    }
 
-    }
-    while ((auxText.length() != 5) || (auxText[2] != '-') || (auxText.substr(3) < "01") || (auxText.substr(3) > "12") || (esCorrecto != true));
+                    else
+                    {
+                        try
+                        {
+                            mes = atoi(auxText.substr(3).c_str());
+
+                            // Comprobación de mes
+                            if ( mes < 1 )
+                                cout << "El mes no puede ser inferior a 01 (Enero)" << endl;
+
+                            else
+                            {
+                                if ( mes > 12 )
+                                    cout << "El mes no puede ser superior a 12 (Diciembre)" << endl;
+
+                                else
+                                {
+                                    dia = atoi(auxText.substr(0,2).c_str());
+
+                                    // Comprobación de día, por mes
+                                    switch ( mes )
+                                    {
+                                        // Enero
+                                        case 1:
+									        if ( (dia >= 1) && (dia <= 31 ) )
+                                                ok = true;
+
+                                            else
+                                                cout << "El dia tiene que estar entre 01 y 31" << endl;
+                                        break;
+
+                                        // Febrero
+                                        case 2:
+                                            if ( (dia >= 1) && (dia <= 28 ) )
+                                                ok = true;
+
+                                            else
+                                                cout << "El dia tiene que estar entre 01 y 28" << endl;
+                                        break;
+
+                                        // Marzo
+                                        case 3:
+                                            if ( (dia >= 1) && (dia <= 31 ) )
+                                                ok = true;
+
+                                            else
+                                                cout << "El dia tiene que estar entre 01 y 31" << endl;
+                                        break;
+
+                                        // Abril
+                                        case 4:
+                                            if ( (dia >= 1) && (dia <= 30 ) )
+                                                ok = true;
+
+                                            else
+                                                cout << "El dia tiene que estar entre 01 y 30" << endl;
+                                        break;
+
+                                        // Mayo
+                                        case 5:
+                                            if ( (dia >= 1) && (dia <= 31 ) )
+                                                ok = true;
+
+                                            else
+                                                cout << "El dia tiene que estar entre 01 y 31" << endl;
+                                        break;
+
+                                        // Junio
+                                        case 6:
+                                            if ( (dia >= 1) && (dia <= 30 ) )
+                                                ok = true;
+
+                                            else
+                                                cout << "El dia tiene que estar entre 01 y 30" << endl;
+                                        break;
+
+                                        // Julio
+                                        case 7:
+                                            if ( (dia >= 1) && (dia <= 31 ) )
+                                                ok = true;
+
+                                            else
+                                                cout << "El dia tiene que estar entre 01 y 31" << endl;
+                                        break;
+
+                                        // Agosto
+                                        case 8:
+                                            if ( (dia >= 1) && (dia <= 31 ) )
+                                                ok = true;
+
+                                            else
+                                                cout << "El dia tiene que estar entre 01 y 31" << endl;
+                                        break;
+
+                                        // Septiembre
+                                        case 9:
+                                            if ( (dia >= 1) && (dia <= 30 ) )
+                                                ok = true;
+
+                                            else
+                                                cout << "El dia tiene que estar entre 01 y 30" << endl;
+                                        break;
+
+                                        // Octubre
+                                        case 10:
+                                            if ( (dia >= 1) && (dia <= 31 ) )
+                                                ok = true;
+
+                                            else
+                                                cout << "El dia tiene que estar entre 01 y 31" << endl;
+                                        break;
+
+                                        // Noviembre
+                                        case 11:
+                                            if ( (dia >= 1) && (dia <= 30 ) )
+                                                ok = true;
+
+                                            else
+                                                cout << "El dia tiene que estar entre 01 y 30" << endl;
+                                        break;
+
+                                        // Diciembre
+                                        case 12:
+                                            if ( (dia >= 1) && (dia <= 31 ) )
+                                                ok = true;
+
+                                            else
+                                                cout << "El dia tiene que estar entre 01 y 31" << endl;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+
+                        catch ( exception )
+                        {
+                            cout << "Los valores introducidos no son incorrectos" << endl;
+                        }
+                    }
+                }
+            }
+        }
+        while ( ok != true );
   
-    contactos[numContactos].cumpleanyos == auxText;
+    contactos[numContactos].cumpleanyos = auxText;
   }
 
   catch( exception )
@@ -160,22 +262,371 @@ void InsertarContacto(int numContactos, tipoContacto contactos[])
   // Pedimos el edad
   cout << "Introduzca su edad: ";
   cin >> contactos[numContactos].edad;
+  cin.ignore();
+  /*
+  // Daremos la edad como no válida si no está comprendida entre 0 y 130 años.
+  while ((contactos[numContactos].edad < 0) || (contactos[numContactos].edad > 130) )
+  {
+      cout << "Edad introducida no válida" << endl;
+      cout << "Introduzca su edad: ";
+      getline(cin,contactos[numContactos].edad);
+        edadAuxiliar = atoi(nombreAuxiliar.c_str());
+        contactos[contactoModificar].edad = edadAuxiliar;
+          cin.ignore();
+  }
+  */
 }
 
 // Función para modificar un contacto
-void ModificarContacto()
+void ModificarContacto(int numContactos, tipoContacto contactos[])
 {
+  int contactoModificar = 0;//Variale para seleccionar que contacto modificar
+  string nombreAuxiliar;
+  int edadAuxiliar;
+  bool emailValidado = false;
+  
+  do
+  {
+     cout << "Introduce el contacto a modificar " <<endl;
+     cin >> contactoModificar;
+     cin.ignore();
+  }while( contactoModificar <= 0 || contactoModificar > numContactos);
+  contactoModificar-=1;
+
+  cout << "Este es el antiguo nombre: " << contactos[contactoModificar].nombre <<endl;
+  cout << "Dime el nuevo nombre (Pulsa intro si on quieres introducir nada)" <<endl;
+  getline(cin,nombreAuxiliar);
+  if ( nombreAuxiliar != "")
+    contactos[contactoModificar].nombre = nombreAuxiliar;
+  
+  cout << "Este es el antiguo apellido: " << contactos[contactoModificar].apellido <<endl;
+  cout << "Dime el nuevo apellido (Pulsa intro si on quieres introducir nada)" <<endl;
+  getline(cin,nombreAuxiliar);
+  if ( nombreAuxiliar != "")
+    contactos[contactoModificar].apellido = nombreAuxiliar;
+
+  cout << "Este es el antiguo telefono: " << contactos[contactoModificar].telefono <<endl;
+  cout << "Dime el nuevo telefono (Pulsa intro si on quieres introducir nada)" <<endl;
+  getline(cin,nombreAuxiliar);
+  if ( nombreAuxiliar != "")
+    contactos[contactoModificar].telefono = nombreAuxiliar;
+
+  cout << "Este es el antiguo email: " << contactos[contactoModificar].email <<endl;
+  do
+  {
+      cout << "Dime el nuevo email (Pulsa intro si on quieres introducir nada)" <<endl;
+      getline(cin,nombreAuxiliar);
+
+      if ((nombreAuxiliar.find_first_of('@') == nombreAuxiliar.find_last_of('@')) // Si solo contiene un @
+            && (nombreAuxiliar.find_last_of('.') > nombreAuxiliar.find_first_of('@')) // Si el último punto está detras del @
+            && (nombreAuxiliar.find_last_of('.') < nombreAuxiliar.length())) // Si el último punto no es el último carácter
+            emailValidado = true; // Suponemos que el e-mail es correcto
+      else
+            cout << "El e-mail introducido no tiene un formato válido" << endl;
+  }
+  while( !emailValidado );
+
+  contactos[contactoModificar].email = nombreAuxiliar;
+
+  cout << "Este es el antiguo cumpleaños: " << contactos[contactoModificar].cumpleanyos <<endl;
+  cout << "Dime el nuevo cumpleaños (Pulsa intro si on quieres introducir nada)" <<endl;
+  getline(cin,nombreAuxiliar);
+  if ( nombreAuxiliar != "")
+    contactos[contactoModificar].cumpleanyos = nombreAuxiliar;
+  
+  cout << "Esta es la antigua edad: " << contactos[contactoModificar].edad <<endl;
+  cout << "Dime la nueva edad (Pulsa intro si on quieres introducir nada)" <<endl;
+  getline(cin,nombreAuxiliar);
+  if ( nombreAuxiliar != "")
+  {
+    edadAuxiliar = atoi(nombreAuxiliar.c_str());
+    contactos[contactoModificar].edad = edadAuxiliar;
+  }
+
+  cout << "Los datos han quedado así:" << contactos[contactoModificar].id << "-" << contactos                   [contactoModificar].nombre << "-" << contactos[contactoModificar].apellido << "-" << contactos[contactoModificar].telefono << "-" << contactos[contactoModificar].email << "-" << contactos[contactoModificar].cumpleanyos << "-" << contactos[contactoModificar].cumpleanyos << "-" << contactos[contactoModificar].edad << endl;
 }
 
 
 // Función para ver la lista de contactos
-void VerContactos()
+void VerContactosOpcion03(int numContactos, tipoContacto contactos[])
 {
+	int i;
+	
+	for ( i = 0 ; i < numContactos ; i++ )
+	{
+		cout << "Id: " << contactos[i].id << endl;
+		cout << "Nombre: " << contactos[i].nombre << endl;
+		cout << "Apellidos: " << contactos[i].apellido << endl;
+		cout << "Teléfono: " << contactos[i].telefono << endl;
+		cout << "Correo: " << contactos[i].email << endl;
+		cout << "Fecha de cumpleaños: " << contactos[i].cumpleanyos
+			<< endl;
+		cout << "Edad: " << contactos[i].edad << endl;
+		cout << "--------------------" << endl;
+		cout << endl;
+	}
+}
+
+// Ordenar la lista de contactos alfabeticamente
+void OrdenarAlfabeticamente(int numContactos, tipoContacto contactosAux[])
+{
+	int i, j;
+    int cont = 1;
+    string var;
+	tipoContacto fichaTemporal;
+	
+	for ( i = 0 ; i < numContactos-1 ; i++ )
+	{
+		for ( j = i+1 ; j < numContactos ; j++ )
+		{
+			// Comparo los nombres
+			if ( contactosAux[i].nombre > contactosAux[j].nombre )
+			{
+				fichaTemporal = contactosAux[i];
+				contactosAux[i] = contactosAux[j];
+				contactosAux[j] = fichaTemporal;
+			}
+		}
+	}
+
+	// Muestro los contactos ya ordenados
+	for ( i = 0 ; i < numContactos ; i++ )
+	{
+		cout << "Id: " << contactosAux[i].id << endl;
+		cout << "Nombre: " << contactosAux[i].nombre << endl;
+		cout << "Apellidos: " << contactosAux[i].apellido << endl;
+		cout << "Teléfono: " << contactosAux[i].telefono << endl;
+		cout << "Correo: " << contactosAux[i].email << endl;
+		cout << "Fecha de cumpleaños: " << contactosAux[i].cumpleanyos
+			<< endl;
+		cout << "Edad: " << contactosAux[i].edad << endl;
+		cout << "--------------------" << endl;
+		cout << endl;
+		
+		// Mostrar de 10 en 10
+		if (cont == 10)
+		{
+			// Si no quedan contactos
+			if (i == maxContactos - 1)
+			{
+				cout << "Pulse una tecla para volver al menú..." << endl;
+				cin >> var;
+				cont = 0;
+				system("cls");
+			}
+			// Al llegar a los diez
+			else 
+			{
+				cout << "Pulse una tecla para continuar..." << endl;
+				cin >> var;
+				cont = 0;
+				system("cls");
+			}
+		}
+
+	cont++;
+	}
+}
+
+
+// Ordenar por edad
+void OrdenarEdad(int numContactos, tipoContacto contactosAux[])
+{
+	int i, j;
+	int cont = 1;
+    string var;
+	tipoContacto fichaTemporal;
+	
+	for ( i = 0 ; i < numContactos-1 ; i++ )
+	{
+		for ( j = i+1 ; j < numContactos ; j++ )
+		{
+			// Comparo las edades
+			if ( contactosAux[i].edad > contactosAux[j].edad )
+			{
+				fichaTemporal = contactosAux[i];
+				contactosAux[i] = contactosAux[j];
+				contactosAux[j] = fichaTemporal;
+			}
+		}
+	}
+	
+	// Muestro los contactos ya ordenados
+	for ( i = 0 ; i < numContactos ; i++ )
+	{
+		cout << "Id: " << contactosAux[i].id << endl;
+		cout << "Nombre: " << contactosAux[i].nombre << endl;
+		cout << "Apellidos: " << contactosAux[i].apellido << endl;
+		cout << "Teléfono: " << contactosAux[i].telefono << endl;
+		cout << "Correo: " << contactosAux[i].email << endl;
+		cout << "Fecha de cumpleaños: " << contactosAux[i].cumpleanyos
+			<< endl;
+		cout << "Edad: " << contactosAux[i].edad << endl;
+		cout << "--------------------" << endl;
+		cout << endl;
+		
+		// Mostrar de 10 en 10
+		if (cont == 10)
+		{
+			// Si no quedan contactos
+			if (i == maxContactos - 1)
+			{
+				cout << "Pulse una tecla para volver al menú..." << endl;
+				cin >> var;
+				cont = 0;
+				system("cls");
+			}
+			// Al llegar a los diez
+			else 
+			{
+				cout << "Pulse una tecla para continuar..." << endl;
+				cin >> var;
+				cont = 0;
+				system("cls");
+			}
+		}
+
+	cont++;
+	}
 }
 
 // Función para calcular los días faltantes hasta el cumpleaños de un contacto
-void CalcularCumpleanyos()
+void CalcularCumpleanyos( int dia, int mes, int numContactos, tipoContacto contactos[] )
 {
+    int id;
+    int diaBuscar;
+    int mesBuscar;
+    int diasFaltantes;
+    int mesesFaltantes;
+
+    VerContactosOpcion03( numContactos, contactos );
+
+    cout << "Introduzca el ID del usuario para calcular fecha" << endl;
+    cin >> id;
+
+    diaBuscar = atoi(contactos[id-1].cumpleanyos.substr(0,2).c_str());
+    mesBuscar = atoi(contactos[id-1].cumpleanyos.substr(3).c_str());
+
+	// Calculo del mes
+	if ( mes == mesBuscar )
+		mesesFaltantes = 0;
+
+	else
+	{
+		if ( mes < mesBuscar )
+			mesesFaltantes = mesBuscar - mes;
+
+		else
+			mesesFaltantes = (12 - mes) + mesBuscar;
+	}
+
+	// Calculo del día
+	if ( dia == diaBuscar )
+		diasFaltantes = 0;
+
+	else
+	{
+		if ( dia < diaBuscar )
+			diasFaltantes = diaBuscar - dia;
+
+		else
+		{
+			switch ( mes )
+			{
+				// Enero
+                case 1:
+					diasFaltantes = (31 - dia) + diaBuscar;
+                break;
+
+                // Febrero
+                case 2:
+                    diasFaltantes = (28 - dia) + diaBuscar;
+                break;
+
+                // Marzo
+                case 3:
+                    diasFaltantes = (31 - dia) + diaBuscar;
+                break;
+
+                // Abril
+                case 4:
+                    diasFaltantes = (30 - dia) + diaBuscar;
+                break;
+
+                // Mayo
+                case 5:
+                    diasFaltantes = (31 - dia) + diaBuscar;
+                break;
+
+                // Junio
+                case 6:
+                    diasFaltantes = (30 - dia) + diaBuscar;
+                break;
+
+                // Julio
+                case 7:
+                    diasFaltantes = (31 - dia) + diaBuscar;
+                break;
+
+                // Agosto
+                case 8:
+                    diasFaltantes = (31 - dia) + diaBuscar;
+                break;
+
+                // Septiembre
+                case 9:
+                    diasFaltantes = (30 - dia) + diaBuscar;
+                break;
+
+                // Octubre
+                case 10:
+                    diasFaltantes = (31 - dia) + diaBuscar;
+                break;
+
+                // Noviembre
+                case 11:
+                    diasFaltantes = (30 - dia) + diaBuscar;
+                break;
+
+                // Diciembre
+                case 12:
+                    diasFaltantes = (31 - dia) + diaBuscar;
+                break;
+			}
+
+            mesesFaltantes --;
+		}
+	}
+
+	// Muestro los días y los meses que faltan
+	if ( (diasFaltantes == 0) && (mesesFaltantes == 0) )
+		cout << "El cumpleaños es hoy" << endl;
+
+	else
+	{
+		if ( (diasFaltantes > 0) && (mesesFaltantes == 0) )
+			cout << "Faltan " << diasFaltantes << " días" << endl;
+
+		else
+		{
+			if ( (diasFaltantes == 0) && (mesesFaltantes > 0) )
+				cout << "Faltan " << mesesFaltantes << " meses" << endl;
+
+			else
+			{
+				cout << "Faltan " << diasFaltantes << " días";
+				cout << " y " << mesesFaltantes << " meses" << endl;
+			}
+		}
+	}
+}
+
+void MostrarContactosOpcion2(int numContactos,tipoContacto contactos[])
+{
+  for (int i=0 ; i < numContactos ; i++)
+  {
+    cout << contactos[i].id << "-" << contactos[i].nombre <<endl;
+  }
 }
 
 int main()
@@ -183,7 +634,12 @@ int main()
     // Variables
     int opcion = 0;
     int numContactos = 0;
+    int dia;
+    int mes;
+    bool ok;
+    string fechaActual;
     tipoContacto contactos[maxContactos];
+    tipoContacto contactosAux[maxContactos];
 
     cout << "Agenda de Contactos" << endl;
     cout << endl;
@@ -212,19 +668,238 @@ int main()
             case 1:
               //if(numContactos < maxContactos)
                 InsertarContacto(numContactos, contactos);
-              numContactos++;
+                numContactos++;
             break;
 
             // Modificar un contacto
             case 2:
+              if ( numContactos <= 0)
+                cout << "No hay datos para modificar "<<endl;
+              else
+              {
+                MostrarContactosOpcion2(numContactos, contactos);
+                ModificarContacto(numContactos,contactos);
+              }
             break;
 
             // Ver lista de contactos
             case 3:
+                system("cls");
+                cout << "1. Ver todos" << endl;
+                cout << "2. Ordenar" << endl;
+                cout << "3. Salir al menú." << endl;
+                cout << "Introduzca una opción: ";
+                cin >> opcion;
+                cout << "--------------------" << endl;
+                cout << endl;
+				
+                switch (opcion)
+                {
+                    case 1:
+                        // Muestro los contactos sin cambiar el orden
+                        VerContactosOpcion03(numContactos, contactos);
+                        cout << endl;
+                    break;
+					
+                    case 2:
+                        cout << "1. Ordenar alfabeticamente." << endl;
+                        cout << "2. Ordenar por edad." << endl;
+                        cout << "3. Salir al menú." << endl;
+                        cout << "Introduzca una opción: ";
+                        cin >> opcion;
+                        cout << "--------------------" << endl;
+                        cout << endl;
+						
+                        switch (opcion)
+                        {
+                            case 1:
+                                OrdenarAlfabeticamente(numContactos, contactos);
+                                cout << endl;
+                            break;
+
+                            case 2:
+                                OrdenarEdad(numContactos, contactos);
+                                cout << endl;
+                            break;
+                        }
+                    break;
+				}
             break;
 
             // Calcular cumpleaños
             case 4:
+                system("cls");
+                ok = false;
+
+                cout << endl;
+                cout << "Calcular cumpleaños" << endl;
+                cout << endl;
+
+                do
+                {
+                    cout << "Introduzca la fecha de hoy (DD-MM): ";
+                    cin >> fechaActual;
+
+                    if ( fechaActual == "" )
+                        cout << "La fecha no puede estar vacía" << endl;
+
+                    else
+                    {
+                        if ( fechaActual.length() != 5 )
+                            cout << "El formato de fecha no es correcto: DD-MM" << endl;
+
+                        else
+                        {
+                            if ( fechaActual[2] != '-' )
+                            {
+                                cout << "El formato de fecha no es correcto: DD-MM" << endl;
+                            }
+
+                            else
+                            {
+                                try
+                                {
+                                    mes = atoi(fechaActual.substr(3).c_str());
+
+                                    // Comprobación de mes
+                                    if ( mes < 1 )
+                                        cout << "El mes no puede ser inferior a 01 (Enero)" << endl;
+
+                                    else
+                                    {
+                                        if ( mes > 12 )
+                                            cout << "El mes no puede ser superior a 12 (Diciembre)" << endl;
+
+                                        else
+                                        {
+                                            dia = atoi(fechaActual.substr(0,2).c_str());
+
+                                            // Comprobación de día, por mes
+                                            switch ( mes )
+                                            {
+                                                // Enero
+                                                case 1:
+												    if ( (dia >= 1) && (dia <= 31 ) )
+                                                        ok = true;
+
+                                                    else
+                                                        cout << "El dia tiene que estar entre 01 y 31" << endl;
+                                                break;
+
+                                                // Febrero
+                                                case 2:
+                                                    if ( (dia >= 1) && (dia <= 28 ) )
+                                                        ok = true;
+
+                                                    else
+                                                        cout << "El dia tiene que estar entre 01 y 28" << endl;
+                                                break;
+
+                                                // Marzo
+                                                case 3:
+                                                    if ( (dia >= 1) && (dia <= 31 ) )
+                                                        ok = true;
+
+                                                    else
+                                                        cout << "El dia tiene que estar entre 01 y 31" << endl;
+                                                break;
+
+                                                // Abril
+                                                case 4:
+                                                    if ( (dia >= 1) && (dia <= 30 ) )
+                                                        ok = true;
+
+                                                    else
+                                                        cout << "El dia tiene que estar entre 01 y 30" << endl;
+                                                break;
+
+                                                // Mayo
+                                                case 5:
+                                                    if ( (dia >= 1) && (dia <= 31 ) )
+                                                        ok = true;
+
+                                                    else
+                                                        cout << "El dia tiene que estar entre 01 y 31" << endl;
+                                                break;
+
+                                                // Junio
+                                                case 6:
+                                                    if ( (dia >= 1) && (dia <= 30 ) )
+                                                        ok = true;
+
+                                                    else
+                                                        cout << "El dia tiene que estar entre 01 y 30" << endl;
+                                                break;
+
+                                                // Julio
+                                                case 7:
+                                                    if ( (dia >= 1) && (dia <= 31 ) )
+                                                        ok = true;
+
+                                                    else
+                                                        cout << "El dia tiene que estar entre 01 y 31" << endl;
+                                                break;
+
+                                                // Agosto
+                                                case 8:
+                                                    if ( (dia >= 1) && (dia <= 31 ) )
+                                                        ok = true;
+
+                                                    else
+                                                        cout << "El dia tiene que estar entre 01 y 31" << endl;
+                                                break;
+
+                                                // Septiembre
+                                                case 9:
+                                                    if ( (dia >= 1) && (dia <= 30 ) )
+                                                        ok = true;
+
+                                                    else
+                                                        cout << "El dia tiene que estar entre 01 y 30" << endl;
+                                                break;
+
+                                                // Octubre
+                                                case 10:
+                                                    if ( (dia >= 1) && (dia <= 31 ) )
+                                                        ok = true;
+
+                                                    else
+                                                        cout << "El dia tiene que estar entre 01 y 31" << endl;
+                                                break;
+
+                                                // Noviembre
+                                                case 11:
+                                                    if ( (dia >= 1) && (dia <= 30 ) )
+                                                        ok = true;
+
+                                                    else
+                                                        cout << "El dia tiene que estar entre 01 y 30" << endl;
+                                                break;
+
+                                                // Diciembre
+                                                case 12:
+                                                    if ( (dia >= 1) && (dia <= 31 ) )
+                                                        ok = true;
+
+                                                    else
+                                                        cout << "El dia tiene que estar entre 01 y 31" << endl;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                catch ( exception )
+                                {
+                                    cout << "Los valores introducidos no son incorrectos" << endl;
+                                }
+                            }
+                        }
+                    }
+                }
+                while ( ok != true );
+
+                CalcularCumpleanyos( dia, mes, numContactos, contactos );
             break;
 
             // Salir
