@@ -1,0 +1,28 @@
+
+aitor
+salgado
+123456789
+aitor@gmail.com
+26-02
+22
+
+ethan
+martinez carratala
+012345678
+ethan@gmail.com
+17-04
+20
+
+andres
+marota
+0123123
+andres@gmail.com
+16-08
+22
+
+raquel
+llorens gambin
+0123123
+rllorens@gmail.com
+28-05
+20
