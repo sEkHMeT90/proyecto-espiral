@@ -1,0 +1,4 @@
+Aplicar función cumpleaños para todos los contactos automaticamente
+Guardar en fichero los cambios
+Búsqueda por términos
+Función libre
