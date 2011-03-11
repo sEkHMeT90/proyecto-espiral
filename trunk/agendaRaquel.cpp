@@ -19,7 +19,7 @@ struct tipoContacto
   string telefono;
   string email;
   string cumpleanyos;
-  string edad;
+  int edad;
 };
 
 // Función para agregar un contacto
@@ -37,7 +37,16 @@ void InsertarContacto(int numContactos, tipoContacto contactos[])
 
   // Pedimos el nombre
   cout << "Introduzca su nombre: ";
-  getline(cin,contactos[numContactos].nombre);
+  getline(cin,auxText);
+
+  while(auxText == ""){
+
+	      cout << "No puede dejar el campo vacio" << endl;
+        cout << "Introduzca su nombre: ";
+        getline(cin,auxText);
+  }
+
+  contactos[numContactos].nombre = auxText;
 
   // Pedimos el apellido
   cout << "Introduzca su apellido: ";
@@ -69,8 +78,8 @@ void InsertarContacto(int numContactos, tipoContacto contactos[])
       while(auxText == ""){
 
 	      cout << "No puede dejar el campo vacio" << endl;
-          cout << "Introduzca su e-mail: ";
-          getline(cin,auxText);
+        cout << "Introduzca su e-mail: ";
+        getline(cin,auxText);
       }
 
       // Comprobamos que el e-mail sea válido
@@ -132,7 +141,7 @@ void InsertarContacto(int numContactos, tipoContacto contactos[])
                                     {
                                         // Enero
                                         case 1:
-									        if ( (dia >= 1) && (dia <= 31 ) )
+									                          if ( (dia >= 1) && (dia <= 31 ) )
                                                 ok = true;
 
                                             else
@@ -261,20 +270,19 @@ void InsertarContacto(int numContactos, tipoContacto contactos[])
   }
   // Pedimos el edad
   cout << "Introduzca su edad: ";
-  cin >> contactos[numContactos].edad;
-  cin.ignore();
-  /*
+  getline(cin,auxText);
+
+  contactos[numContactos].edad = atoi(auxText.c_str());
+
   // Daremos la edad como no válida si no está comprendida entre 0 y 130 años.
   while ((contactos[numContactos].edad < 0) || (contactos[numContactos].edad > 130) )
   {
       cout << "Edad introducida no válida" << endl;
       cout << "Introduzca su edad: ";
-      getline(cin,contactos[numContactos].edad);
-        edadAuxiliar = atoi(nombreAuxiliar.c_str());
-        contactos[contactoModificar].edad = edadAuxiliar;
-          cin.ignore();
+      getline(cin,auxText);
+
+      contactos[numContactos].edad = atoi(auxText.c_str());
   }
-  */
 }
 
 // Función para modificar un contacto
@@ -334,7 +342,7 @@ void ModificarContacto(int numContactos, tipoContacto contactos[])
   if ( nombreAuxiliar != "")
     contactos[contactoModificar].cumpleanyos = nombreAuxiliar;
   
-  cout << "Esta es la antigua edad: " << contactos[contactoModificar].edad <<endl;
+  cout << "Esta es la antigua edad: " << contactos[contactoModificar].cumpleanyos <<endl;
   cout << "Dime la nueva edad (Pulsa intro si on quieres introducir nada)" <<endl;
   getline(cin,nombreAuxiliar);
   if ( nombreAuxiliar != "")
