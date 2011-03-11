@@ -20,7 +20,7 @@ struct tipoContacto
   string email;
   string cumpleanyos;
   int edad;
-  string notas[];
+  string notas[maxContactos];
 };
 
 // Función para agregar un contacto
@@ -578,12 +578,37 @@ void MostrarContactosOpcion2(int numContactos,tipoContacto contactos[])
   }
 }
 
-void AgregarAnotacion()
+void AgregarAnotacion(int numContactos, tipoContacto contactos[])
 {
+	string nombreContacto;
+	int numContacto;
+	string nota;
+	int siguienteNota = 0;
+	
+	cout << "Nombre del contacto: ";
+	cin >> nombreContacto;
+	numContacto = BusquedaPorNombre(nombreContacto, numContactos, contactos);
+	
+	if (numContacto == 0)
+		cout << "El contacto no existe." << endl;
+	else
+	{
+		cout << "Escribe la nota: " << endl;
+		cin >> nota;
+		
+		if (nota == null)
+			cout << "No se ha introducido ninguna nota." << endl;
+		else
+		{
+			contactos[numContacto-1].notas[siguienteNota] = nota;
+			siguienteNota++;
+		}	 
+	}
 }
 
-void BusquedaPorNombre()
+int BusquedaPorNombre()
 {
+	return 0;
 }
 
 void VerAnotaciones()
@@ -880,7 +905,7 @@ int main()
 				{
 					case 1:
 						system("cls");
-						AgregarAnotacion();
+						AgregarAnotacion(numContactos, contactos);
 						break;
 					case 2:
 						system("cls");
@@ -904,7 +929,7 @@ int main()
             break;
         }
     }
-    while ( opcion != 5 );
+    while ( opcion != 0 );
 
     return 0;
 }
