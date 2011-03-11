@@ -83,9 +83,10 @@ void InsertarContacto(int numContactos, tipoContacto contactos[])
       }
 
       // Comprobamos que el e-mail sea válido
-      if ((auxText.find_first_of('@') == auxText.find_last_of('@')) // Si solo contiene un @
+      if (( auxText.find('.',0) != string::npos ) && ( auxText.find('@',0) != string::npos ) // Si tiene mínimo un punto y un arroba
+         && (auxText.find_first_of('@') == auxText.find_last_of('@')) // Si solo contiene un @
          && (auxText.find_last_of('.') > auxText.find_first_of('@')) // Si el último punto está detras del @
-         && (auxText.find_last_of('.') < auxText.length())) // Si el último punto no es el último carácter
+         && (auxText.find_last_of('.') < auxText.length()-1)) // Si el último punto no es el último carácter
             emailValidado = true; // Suponemos que el e-mail es correcto
       else
           cout << "El e-mail introducido no tiene un formato válido" << endl;
@@ -325,9 +326,10 @@ void ModificarContacto(int numContactos, tipoContacto contactos[])
       cout << "Dime el nuevo email (Pulsa intro si on quieres introducir nada)" <<endl;
       getline(cin,nombreAuxiliar);
 
-      if ((nombreAuxiliar.find_first_of('@') == nombreAuxiliar.find_last_of('@')) // Si solo contiene un @
-            && (nombreAuxiliar.find_last_of('.') > nombreAuxiliar.find_first_of('@')) // Si el último punto está detras del @
-            && (nombreAuxiliar.find_last_of('.') < nombreAuxiliar.length())) // Si el último punto no es el último carácter
+      if (( auxText.find('.',0) != string::npos ) && ( auxText.find('@',0) != string::npos ) // Si tiene mínimo un punto y un arroba
+         && (auxText.find_first_of('@') == auxText.find_last_of('@')) // Si solo contiene un @
+         && (auxText.find_last_of('.') > auxText.find_first_of('@')) // Si el último punto está detras del @
+         && (auxText.find_last_of('.') < auxText.length()-1)) // Si el último punto no es el último carácter
             emailValidado = true; // Suponemos que el e-mail es correcto
       else
             cout << "El e-mail introducido no tiene un formato válido" << endl;
