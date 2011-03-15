@@ -8,6 +8,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <time.h>
 #define maxContactos 50
 
 using namespace std;
@@ -24,6 +25,15 @@ struct tipoContacto
   string notas[50];
   int siguienteNota;
 };
+
+void FechaActual(int &dia, int &mes )
+{
+    time_t tSac = time (NULL);
+    struct tm* tmP = localtime(&tSac);
+
+    dia = tmP -> tm_mday;
+    mes = tmP -> tm_mon+1;
+}
 
 // Función para agregar un contacto
 void InsertarContacto(int numContactos, tipoContacto contactos[])
@@ -514,21 +524,21 @@ void OrdenarEdad(int numContactos, tipoContacto contactosAux[])
 // Función para calcular los días faltantes hasta el cumpleaños de un contacto
 void CalcularCumpleanyos( int dia, int mes, int numContactos, tipoContacto contactos[] )
 {
-    int id;
-    int diaBuscar;
-    int mesBuscar;
-    int diasFaltantes;
-    int mesesFaltantes;
+  int id;
+  int diaBuscar;
+  int mesBuscar;
+  int diasFaltantes;
+  int mesesFaltantes;
 
-    VerContactosOpcion03( numContactos, contactos );
+  VerContactosOpcion03( numContactos, contactos );
 
 	cout << endl;
-    cout << "Introduzca el ID del usuario para calcular fecha" << endl;
-    cin >> id;
+  cout << "Introduzca el ID del usuario para calcular fecha" << endl;
+  cin >> id;
 	cout << endl;
 
-    diaBuscar = atoi(contactos[id-1].cumpleanyos.substr(0,2).c_str());
-    mesBuscar = atoi(contactos[id-1].cumpleanyos.substr(3).c_str());
+  diaBuscar = atoi(contactos[id-1].cumpleanyos.substr(0,2).c_str());
+  mesBuscar = atoi(contactos[id-1].cumpleanyos.substr(3).c_str());
 
 	// Calculo del mes
 	if ( mes == mesBuscar )
@@ -654,6 +664,178 @@ void CalcularCumpleanyos( int dia, int mes, int numContactos, tipoContacto conta
 			{
 				cout << "Faltan " << diasFaltantes << " días";
 				cout << " y " << mesesFaltantes << " meses" << endl;
+			}
+		}
+	}
+}
+
+string CalcularCumpleanyos02(int id, int numContactos, tipoContacto contactos[] )
+{
+    int mes = 0;
+    int dia = 0;
+    int diaBuscar;
+    int mesBuscar;
+    int diasFaltantes;
+    int mesesFaltantes;
+    char aux[2];
+    string auxiliar;
+    string auxiliar2;
+    
+    FechaActual(dia, mes);
+    
+    diaBuscar = atoi(contactos[id].cumpleanyos.substr(0,2).c_str());
+    mesBuscar = atoi(contactos[id].cumpleanyos.substr(3).c_str());
+
+	// Calculo del mes
+	if ( mes == mesBuscar )
+		mesesFaltantes = 0;
+
+	else
+	{
+		if ( mes < mesBuscar )
+			mesesFaltantes = mesBuscar - mes;
+
+		else
+			mesesFaltantes = (12 - mes) + mesBuscar;
+	}
+
+	// Calculo del día
+	if ( dia == diaBuscar )
+		diasFaltantes = 0;
+
+	else
+	{
+		if ( dia < diaBuscar )
+			diasFaltantes = diaBuscar - dia;
+
+		else
+		{
+			switch ( mes )
+			{
+				// Enero
+                case 1:
+					diasFaltantes = (31 - dia) + diaBuscar;
+                break;
+
+                // Febrero
+                case 2:
+                    diasFaltantes = (28 - dia) + diaBuscar;
+                break;
+
+                // Marzo
+                case 3:
+                    diasFaltantes = (31 - dia) + diaBuscar;
+                break;
+
+                // Abril
+                case 4:
+                    diasFaltantes = (30 - dia) + diaBuscar;
+                break;
+
+                // Mayo
+                case 5:
+                    diasFaltantes = (31 - dia) + diaBuscar;
+                break;
+
+                // Junio
+                case 6:
+                    diasFaltantes = (30 - dia) + diaBuscar;
+                break;
+
+                // Julio
+                case 7:
+                    diasFaltantes = (31 - dia) + diaBuscar;
+                break;
+
+                // Agosto
+                case 8:
+                    diasFaltantes = (31 - dia) + diaBuscar;
+                break;
+
+                // Septiembre
+                case 9:
+                    diasFaltantes = (30 - dia) + diaBuscar;
+                break;
+
+                // Octubre
+                case 10:
+                    diasFaltantes = (31 - dia) + diaBuscar;
+                break;
+
+                // Noviembre
+                case 11:
+                    diasFaltantes = (30 - dia) + diaBuscar;
+                break;
+
+                // Diciembre
+                case 12:
+                    diasFaltantes = (31 - dia) + diaBuscar;
+                break;
+			}
+
+			mesesFaltantes --;
+
+			if ( mesesFaltantes == -1 )
+				mesesFaltantes += 12;
+		}
+	}
+
+	// Muestro los días y los meses que faltan
+	if ( (diasFaltantes == 0) && (mesesFaltantes == 0) )
+		return "El cumpleaños es hoy";
+		
+	else
+	{
+		if ( (diasFaltantes > 0) && (mesesFaltantes == 0) )
+		{
+			if ( diasFaltantes == 1 )
+            {
+			    itoa(diasFaltantes, aux, 10);
+                auxiliar[0] = aux[0];
+                auxiliar[1] = aux[1];
+			    return "Falta " + auxiliar + " día";
+            }
+			else
+            {
+                itoa(diasFaltantes, aux, 10);
+                auxiliar[0] = aux[0];
+                auxiliar[1] = aux[1];
+				return "Faltan " + auxiliar + " días";
+            }
+			
+		}
+
+		else
+		{
+			if ( (diasFaltantes == 0) && (mesesFaltantes > 0) )
+			{
+				if ( mesesFaltantes == 1 )
+                {
+                    itoa(mesesFaltantes, aux, 10);
+                    auxiliar[0] = aux[0];
+                    auxiliar[1] = aux[1];
+					return "Falta " + auxiliar + " mes";
+                }
+				else
+                {
+				    itoa(mesesFaltantes, aux, 10);
+                    auxiliar[0] = aux[0];
+                    auxiliar[1] = aux[1];
+					return "Faltan " + auxiliar + " meses";
+                }
+			}
+
+			else
+			{
+				itoa(diasFaltantes, aux, 10);
+                auxiliar[0] = aux[0];
+                auxiliar[1] = aux[1];
+
+                itoa(mesesFaltantes, aux, 10);
+                auxiliar2[0] = aux[0];
+                auxiliar2[1] = aux[1];
+
+				return "Faltan " + auxiliar + " días y " + auxiliar2 + " meses"; 
 			}
 		}
 	}
@@ -793,16 +975,181 @@ void SobrecargarContactos(tipoContacto contactos[],int &numContactos)
           getline(fichero_lectura,contactos[numContactos].cumpleanyos);
           getline(fichero_lectura,linea);
           contactos[numContactos].edad = atoi(linea.c_str());
-          contactos[numContactos].siguienteNota = 0;
+          getline(fichero_lectura,linea);
+          contactos[numContactos].siguienteNota = atoi(linea.c_str());
+          // contactos[numContactos].siguienteNota = 0;
           numContactos++;
         }
       }
+      fichero_lectura.close();
     }
     else
     {
       cout << "No se han podido sobrecargar contactos desde fichero" << endl;
     }
     //---------------FICHERO----------------------------//
+}
+
+void GuardarEnFicheros(tipoContacto contactos[], int numContactos)
+{
+  ofstream fichero_escritura;
+
+  fichero_escritura.open("sobrecargar.txt");
+
+  if ( fichero_escritura.is_open())
+  {
+    for ( int i = 0; i < numContactos; i++)
+    {
+      fichero_escritura << endl;
+      fichero_escritura << contactos[i].nombre <<endl;
+      fichero_escritura << contactos[i].apellido <<endl;
+      fichero_escritura << contactos[i].telefono <<endl;
+      fichero_escritura << contactos[i].email <<endl;
+      fichero_escritura << contactos[i].cumpleanyos <<endl;
+      fichero_escritura << contactos[i].edad <<endl;
+      fichero_escritura << contactos[i].siguienteNota <<endl;
+      
+    }
+    fichero_escritura.close();
+  }
+  else
+    cout << "Ha habiado un problema al escribir en fichero" << endl;
+}
+
+void borrarContactos(int &numContactos)
+{
+	numContactos = 0;
+	cout << "Los contactos han sido borrados." << endl;
+	cout << endl;
+}
+
+void cumpleanyosMes(int numContactos, tipoContacto contactos[])
+{
+	int i;
+    int diaActual;
+	int mesActual;
+    int mesBuscar;
+    bool encontrado = false;
+
+    FechaActual(diaActual, mesActual);
+	
+	for (i = 0 ; i < numContactos ; i++)
+	{
+		mesBuscar = atoi(contactos[i].cumpleanyos.substr(3).c_str());
+		
+		if (mesActual == mesBuscar)
+		{
+            encontrado = true;
+			cout << "Id: " << contactos[i].id << endl;
+			cout << "Nombre: " << contactos[i].nombre << endl;
+			cout << "Correo: " << contactos[i].email << endl;
+			cout << "Fecha de cumpleaños: " << contactos[i].cumpleanyos << endl;
+			cout << "--------------------" << endl;
+			cout << endl;
+		}
+	}
+
+    if ( encontrado == false )
+    {
+        cout << "No hay contactos que cumplan años en éste mes" << endl;
+    }
+}
+
+void Busqueda(int numContactos,tipoContacto contactos[])
+{
+    bool encontrado = false;
+    int id;
+    string textoBuscar;
+
+    // Pedimos el texto a buscar
+    cout << "Introduzca el texto a buscar: ";
+	cin >> textoBuscar;
+
+    for ( int i = 0 ; i < numContactos ; i ++ )
+    {
+        // Busca en nombre
+        if ( contactos[i].nombre.find(textoBuscar,0) != string::npos )
+        {
+            encontrado = true;
+            cout << "Id: " << contactos[i].id << endl;
+		    cout << "Nombre: " << contactos[i].nombre << endl;
+		    cout << "--------------------" << endl;
+		    cout << endl;
+        }
+        else {
+          // Buscar en e-mail
+          if ( contactos[i].email.find(textoBuscar,0) != string::npos )
+          {
+              encontrado = true;
+              cout << "Id: " << contactos[i].id << endl;
+		      cout << "Nombre: " << contactos[i].nombre << endl;
+              cout << "Correo: " << contactos[i].email << endl;
+		      cout << "--------------------" << endl;
+		      cout << endl;
+          }
+
+          else {
+            // Busca en teléfono
+            if ( contactos[i].telefono.find(textoBuscar,0) != string::npos )
+            {
+                encontrado = true;
+                cout << "Id: " << contactos[i].id << endl;
+		        cout << "Nombre: " << contactos[i].nombre << endl;
+                cout << "Teléfono: " << contactos[i].telefono << endl;
+		        cout << "--------------------" << endl;
+		        cout << endl;
+            }
+            else {
+              // Busca en apellido
+              if ( contactos[i].apellido.find(textoBuscar,0) != string::npos )
+              {
+                  encontrado = true;
+                  cout << "Id: " << contactos[i].id << endl;
+		          cout << "Nombre: " << contactos[i].nombre << endl;
+                  cout << "Apellidos: " << contactos[i].apellido << endl;
+		          cout << "--------------------" << endl;
+		          cout << endl;
+              }
+              else {
+                // Busca en fecha de cumpleaños
+                if ( contactos[i].cumpleanyos.find(textoBuscar,0) != string::npos )
+                {
+                    encontrado = true;
+                    cout << "Id: " << contactos[i].id << endl;
+		            cout << "Nombre: " << contactos[i].nombre << endl;
+                    cout << "Edad: " << contactos[i].edad << endl;
+		            cout << "--------------------" << endl;
+		            cout << endl;
+                }
+              }
+            }
+          }
+        }
+    }
+
+    if ( encontrado == true )
+    {
+        cout << "Introduzca el ID del contacto deseado" << endl;
+        cin >> id;
+        cin.ignore();
+
+        cout << "Id: " << contactos[id-1].id << endl;
+		cout << "Nombre: " << contactos[id-1].nombre << endl;
+		cout << "Apellidos: " << contactos[id-1].apellido << endl;
+		cout << "Teléfono: " << contactos[id-1].telefono << endl;
+		cout << "Correo: " << contactos[id-1].email << endl;
+		cout << "Fecha de cumpleaños: " << contactos[id-1].cumpleanyos << endl;
+		cout << "Edad: " << contactos[id-1].edad << endl;
+		cout << "--------------------" << endl;
+		cout << endl;
+        
+        system("pause");
+    }
+
+    else
+    {
+        cout << "No se ha encontrado ningún resultado" << endl;
+    }
 }
 
 int main()
@@ -820,9 +1167,6 @@ int main()
     cout << "Agenda de Contactos" << endl;
     cout << endl;
 
-    SobrecargarContactos(contactos,numContactos);
-    cout << endl;
-
     // Búcle del programa
     do
     {
@@ -835,6 +1179,11 @@ int main()
         cout << "3.- Ver contactos" << endl;
         cout << "4.- Calcular cumpleaños" << endl;
 		cout << "5.- Anotaciones" << endl;
+        cout << "6.- Guardar cambios en fichero" << endl;
+        cout << "7.- Cargar contactos desde fichero" << endl;
+        cout << "8.- Borrar todos los contactos" << endl;
+		cout << "9.- Cumpleaños de este mes" << endl;
+        cout << "10.- Búsqueda por término" << endl;
         cout << "0.- Salir" << endl;
         cout << endl;
         cout << "Introduzca una opción: ";
@@ -1115,6 +1464,36 @@ int main()
 					break;
 				}
 				break;
+
+            // Guardar en Fichero
+            case 6:
+			    system("cls");
+                GuardarEnFicheros(contactos, numContactos);
+                break;
+
+            // Cargar desde fichero
+            case 7:
+                system("cls");
+                SobrecargarContactos(contactos,numContactos);
+                break;
+
+            // Borrar todos los contactos
+            case 8:
+                system("cls");
+				borrarContactos(numContactos);
+				break;
+
+            // Ver cumpleaños de éste mes
+            case 9:
+                system("cls");
+				cumpleanyosMes(numContactos, contactos);
+                break;
+
+            // Búsqueda por término
+            case 10:
+                system("cls");
+                Busqueda(numContactos, contactos);
+                break;
 
             // Salir
             case 0:

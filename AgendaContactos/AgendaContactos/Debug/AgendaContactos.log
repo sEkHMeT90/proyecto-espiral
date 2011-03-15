@@ -1,1 +1,17 @@
-﻿  AgendaContactos.vcxproj -> E:\ADA\Bloque 2 - Jesús García\Ciclo Espiral\AgendaContactos\Debug\AgendaContactos.exe
+﻿  agenda.cpp
+e:\ada\bloque 2 - jesús garcía\ciclo espiral\agendacontactos\agendacontactos\agenda.cpp(32): warning C4996: 'localtime': This function or variable may be unsafe. Consider using localtime_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          c:\archivos de programa\microsoft visual studio 10.0\vc\include\time.inl(112) : vea la declaración de 'localtime'
+e:\ada\bloque 2 - jesús garcía\ciclo espiral\agendacontactos\agendacontactos\agenda.cpp(793): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _itoa. See online help for details.
+          c:\archivos de programa\microsoft visual studio 10.0\vc\include\stdlib.h(867) : vea la declaración de 'itoa'
+e:\ada\bloque 2 - jesús garcía\ciclo espiral\agendacontactos\agendacontactos\agenda.cpp(800): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _itoa. See online help for details.
+          c:\archivos de programa\microsoft visual studio 10.0\vc\include\stdlib.h(867) : vea la declaración de 'itoa'
+e:\ada\bloque 2 - jesús garcía\ciclo espiral\agendacontactos\agendacontactos\agenda.cpp(814): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _itoa. See online help for details.
+          c:\archivos de programa\microsoft visual studio 10.0\vc\include\stdlib.h(867) : vea la declaración de 'itoa'
+e:\ada\bloque 2 - jesús garcía\ciclo espiral\agendacontactos\agendacontactos\agenda.cpp(821): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _itoa. See online help for details.
+          c:\archivos de programa\microsoft visual studio 10.0\vc\include\stdlib.h(867) : vea la declaración de 'itoa'
+e:\ada\bloque 2 - jesús garcía\ciclo espiral\agendacontactos\agendacontactos\agenda.cpp(830): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _itoa. See online help for details.
+          c:\archivos de programa\microsoft visual studio 10.0\vc\include\stdlib.h(867) : vea la declaración de 'itoa'
+e:\ada\bloque 2 - jesús garcía\ciclo espiral\agendacontactos\agendacontactos\agenda.cpp(834): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _itoa. See online help for details.
+          c:\archivos de programa\microsoft visual studio 10.0\vc\include\stdlib.h(867) : vea la declaración de 'itoa'
+  LINK : no se encontró E:\ADA\Bloque 2 - Jesús García\Ciclo Espiral\AgendaContactos\Debug\AgendaContactos.exe o no lo generó el último vínculo incremental; ejecutando vínculo completo
+  AgendaContactos.vcxproj -> E:\ADA\Bloque 2 - Jesús García\Ciclo Espiral\AgendaContactos\Debug\AgendaContactos.exe
